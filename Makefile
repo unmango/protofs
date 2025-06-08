@@ -14,6 +14,9 @@ format fmt: $(shell $(BUF) ls-files) | bin/buf
 lint: $(shell $(BUF) ls-files) | bin/buf
 	$(BUF) lint
 
+breaking: | bin/buf
+	$(BUF) breaking --against 'https://github.com/unmango/protofs.git#branch=main'
+
 update: | bin/buf
 	$(BUF) dep update
 

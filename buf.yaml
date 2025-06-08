@@ -6,3 +6,6 @@ lint:
 breaking:
   use:
     - FILE
+
+modules:
+  - name: buf.build/unmango/protofs
