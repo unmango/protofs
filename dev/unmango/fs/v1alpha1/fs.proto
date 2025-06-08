@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package dev.unmango.fs.v1alpha1;
 
+import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 
 service FsService {
@@ -23,9 +24,7 @@ message ChmodRequest {
   FileMode mode = 2;
 }
 
-message ChmodResponse {
-  string error = 1;
-}
+message ChmodResponse {}
 
 message ChownRequest {
   string name = 1;
@@ -33,9 +32,7 @@ message ChownRequest {
   int32 gid = 3;
 }
 
-message ChownResponse {
-  string error = 1;
-}
+message ChownResponse {}
 
 message ChtimesRequest {
   string name = 1;
@@ -43,9 +40,7 @@ message ChtimesRequest {
   google.protobuf.Timestamp mtime = 3;
 }
 
-message ChtimesResponse {
-  string error = 1;
-}
+message ChtimesResponse {}
 
 message CreateRequest {
   string name = 1;
@@ -53,7 +48,6 @@ message CreateRequest {
 
 message CreateResponse {
   File file = 1;
-  string error = 2;
 }
 
 message MkdirRequest {
@@ -61,9 +55,7 @@ message MkdirRequest {
   FileMode perm = 2;
 }
 
-message MkdirResponse {
-  string error = 1;
-}
+message MkdirResponse {}
 
 message OpenRequest {
   string name = 1;
@@ -71,7 +63,6 @@ message OpenRequest {
 
 message OpenResponse {
   File file = 1;
-  string error = 2;
 }
 
 message OpenFileRequest {
@@ -82,33 +73,26 @@ message OpenFileRequest {
 
 message OpenFileResponse {
   File file = 1;
-  string error = 2;
 }
 
 message RemoveRequest {
   string name = 1;
 }
 
-message RemoveResponse {
-  string error = 1;
-}
+message RemoveResponse {}
 
 message RemoveAllRequest {
   string path = 1;
 }
 
-message RemoveAllResponse {
-  string error = 1;
-}
+message RemoveAllResponse {}
 
 message RenameRequest {
   string oldname = 1;
   string newname = 2;
 }
 
-message RenameResponse {
-  string error = 1;
-}
+message RenameResponse {}
 
 message StatRequest {
   string name = 1;
@@ -116,10 +100,10 @@ message StatRequest {
 
 message StatResponse {
   FileInfo file_info = 1;
-  string error = 2;
 }
 
 // https://pkg.go.dev/io/fs#FileMode
+
 enum FileMode {
   FILE_MODE_UNSPECIFIED = 0;
   FILE_MODE_DIR = -2147483648;
@@ -138,6 +122,15 @@ enum FileMode {
   FILE_MODE_PERM = 511;
 }
 
-message File {}
+message File {
+  string name = 1;
+}
 
-message FileInfo {}
+message FileInfo {
+  string name = 1;
+  int64 size = 2;
+  FileMode mode = 3;
+  google.protobuf.Timestamp mod_time = 4;
+  bool is_dir = 5;
+  google.protobuf.Any sys = 6;
+}
