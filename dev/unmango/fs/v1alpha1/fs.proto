@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package dev.unmango.fs.v1alpha1;
+
+import "google/protobuf/timestamp.proto";
+
+service FsService {
+  rpc Chmod(ChmodRequest) returns (ChmodResponse);
+  rpc Chown(ChownRequest) returns (ChownResponse);
+  rpc Chtimes(ChtimesRequest) returns (ChtimesResponse);
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Mkdir(MkdirRequest) returns (MkdirResponse);
+  rpc Open(OpenRequest) returns (OpenResponse);
+  rpc OpenFile(OpenFileRequest) returns (OpenFileResponse);
+  rpc Remove(RemoveRequest) returns (RemoveResponse);
+  rpc RemoveAll(RemoveAllRequest) returns (RemoveAllResponse);
+  rpc Rename(RenameRequest) returns (RenameResponse);
+  rpc Stat(StatRequest) returns (StatResponse);
+}
+
+message ChmodRequest {
+  string name = 1;
+  FileMode mode = 2;
+}
+
+message ChmodResponse {
+  string error = 1;
+}
+
+message ChownRequest {
+  string name = 1;
+  int32 uid = 2;
+  int32 gid = 3;
+}
+
+message ChownResponse {
+  string error = 1;
+}
+
+message ChtimesRequest {
+  string name = 1;
+  google.protobuf.Timestamp atime = 2;
+  google.protobuf.Timestamp mtime = 3;
+}
+
+message ChtimesResponse {
+  string error = 1;
+}
+
+message CreateRequest {
+  string name = 1;
+}
+
+message CreateResponse {
+  File file = 1;
+  string error = 2;
+}
+
+message MkdirRequest {
+  string name = 1;
+  FileMode perm = 2;
+}
+
+message MkdirResponse {
+  string error = 1;
+}
+
+message OpenRequest {
+  string name = 1;
+}
+
+message OpenResponse {
+  File file = 1;
+  string error = 2;
+}
+
+message OpenFileRequest {
+  string name = 1;
+  int32 flag = 2;
+  FileMode perm = 3;
+}
+
+message OpenFileResponse {
+  File file = 1;
+  string error = 2;
+}
+
+message RemoveRequest {
+  string name = 1;
+}
+
+message RemoveResponse {
+  string error = 1;
+}
+
+message RemoveAllRequest {
+  string path = 1;
+}
+
+message RemoveAllResponse {
+  string error = 1;
+}
+
+message RenameRequest {
+  string oldname = 1;
+  string newname = 2;
+}
+
+message RenameResponse {
+  string error = 1;
+}
+
+message StatRequest {
+  string name = 1;
+}
+
+message StatResponse {
+  FileInfo file_info = 1;
+  string error = 2;
+}
+
+// https://pkg.go.dev/io/fs#FileMode
+enum FileMode {
+  FILE_MODE_UNSPECIFIED = 0;
+  FILE_MODE_DIR = -2147483648;
+  FILE_MODE_APPEND = 1073741824;
+  FILE_MODE_EXCLUSIVE = 536870912;
+  FILE_MODE_TEMPORARY = 268435456;
+  FILE_MODE_SYMLINK = 134217728;
+  FILE_MODE_DEVICE = 67108864;
+  FILE_MODE_NAMED_PIPE = 33554432;
+  FILE_MODE_SOCKET = 16777216;
+  FILE_MODE_SETUID = 8388608;
+  FILE_MODE_SETGID = 4194304;
+  FILE_MODE_CHAR_DEVICE = 2097152;
+  FILE_MODE_STICKY = 1048576;
+  FILE_MODE_IRREGULAR = 524288;
+  FILE_MODE_PERM = 511;
+}
+
+message File {}
+
+message FileInfo {}
