@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dev.unmango.fs.v1alpha1;
 
-import "google/protobuf/any.proto";
+import "dev/unmango/file/v1alpha1/file.proto";
 import "google/protobuf/timestamp.proto";
 
 service FsService {
@@ -21,7 +21,7 @@ service FsService {
 
 message ChmodRequest {
   string name = 1;
-  FileMode mode = 2;
+  file.v1alpha1.FileMode mode = 2;
 }
 
 message ChmodResponse {}
@@ -47,12 +47,12 @@ message CreateRequest {
 }
 
 message CreateResponse {
-  File file = 1;
+  file.v1alpha1.File file = 1;
 }
 
 message MkdirRequest {
   string name = 1;
-  FileMode perm = 2;
+  file.v1alpha1.FileMode perm = 2;
 }
 
 message MkdirResponse {}
@@ -62,17 +62,17 @@ message OpenRequest {
 }
 
 message OpenResponse {
-  File file = 1;
+  file.v1alpha1.File file = 1;
 }
 
 message OpenFileRequest {
   string name = 1;
   int32 flag = 2;
-  FileMode perm = 3;
+  file.v1alpha1.FileMode perm = 3;
 }
 
 message OpenFileResponse {
-  File file = 1;
+  file.v1alpha1.File file = 1;
 }
 
 message RemoveRequest {
@@ -99,38 +99,5 @@ message StatRequest {
 }
 
 message StatResponse {
-  FileInfo file_info = 1;
-}
-
-// https://pkg.go.dev/io/fs#FileMode
-
-enum FileMode {
-  FILE_MODE_UNSPECIFIED = 0;
-  FILE_MODE_DIR = -2147483648;
-  FILE_MODE_APPEND = 1073741824;
-  FILE_MODE_EXCLUSIVE = 536870912;
-  FILE_MODE_TEMPORARY = 268435456;
-  FILE_MODE_SYMLINK = 134217728;
-  FILE_MODE_DEVICE = 67108864;
-  FILE_MODE_NAMED_PIPE = 33554432;
-  FILE_MODE_SOCKET = 16777216;
-  FILE_MODE_SETUID = 8388608;
-  FILE_MODE_SETGID = 4194304;
-  FILE_MODE_CHAR_DEVICE = 2097152;
-  FILE_MODE_STICKY = 1048576;
-  FILE_MODE_IRREGULAR = 524288;
-  FILE_MODE_PERM = 511;
-}
-
-message File {
-  string name = 1;
-}
-
-message FileInfo {
-  string name = 1;
-  int64 size = 2;
-  FileMode mode = 3;
-  google.protobuf.Timestamp mod_time = 4;
-  bool is_dir = 5;
-  google.protobuf.Any sys = 6;
+  file.v1alpha1.FileInfo file_info = 1;
 }
