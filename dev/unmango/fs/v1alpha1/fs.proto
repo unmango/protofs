@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package dev.unmango.fs.v1alpha1;
 
@@ -11,6 +11,7 @@ service FsService {
   rpc Chtimes(ChtimesRequest) returns (ChtimesResponse);
   rpc Create(CreateRequest) returns (CreateResponse);
   rpc Mkdir(MkdirRequest) returns (MkdirResponse);
+  rpc MkdirAll(MkdirAllRequest) returns (MkdirAllResponse);
   rpc Open(OpenRequest) returns (OpenResponse);
   rpc OpenFile(OpenFileRequest) returns (OpenFileResponse);
   rpc Remove(RemoveRequest) returns (RemoveResponse);
@@ -49,6 +50,13 @@ message CreateRequest {
 message CreateResponse {
   file.v1alpha1.File file = 1;
 }
+
+message MkdirAllRequest {
+  string path = 1;
+  file.v1alpha1.FileMode perm = 2;
+}
+
+message MkdirAllResponse {}
 
 message MkdirRequest {
   string name = 1;
