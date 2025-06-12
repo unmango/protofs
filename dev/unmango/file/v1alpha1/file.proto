@@ -5,6 +5,8 @@ package dev.unmango.file.v1alpha1;
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 
+option features.field_presence = IMPLICIT;
+
 // https://pkg.go.dev/io/fs#FileMode
 
 enum FileMode {
@@ -39,14 +41,14 @@ message FileInfo {
 }
 
 service FileService {
-  rpc Read(ReadRequest) returns (stream ReadResponse);
-  rpc ReadAt(ReadAtRequest) returns (stream ReadAtResponse);
+  rpc Read(ReadRequest) returns (ReadResponse);
+  rpc ReadAt(ReadAtRequest) returns (ReadAtResponse);
   rpc Readdir(ReaddirRequest) returns (ReaddirResponse);
   rpc ReaddirNames(ReaddirNamesRequest) returns (ReaddirNamesResponse);
   rpc Stat(StatRequest) returns (StatResponse);
   rpc Truncate(TruncateRequest) returns (TruncateResponse);
-  rpc Write(stream WriteRequest) returns (WriteResponse);
-  rpc WriteAt(stream WriteAtRequest) returns (WriteAtResponse);
+  rpc Write(WriteRequest) returns (WriteResponse);
+  rpc WriteAt(WriteAtRequest) returns (WriteAtResponse);
 }
 
 message ReaddirRequest {
