@@ -9,7 +9,7 @@ build: $(shell $(BUF) ls-files) | bin/buf
 	$(BUF) build
 
 format fmt: $(shell $(BUF) ls-files) | bin/buf
-	$(BUF) format
+	$(BUF) format --write
 
 lint: $(shell $(BUF) ls-files) | bin/buf
 	$(BUF) lint

@@ -1,4 +1,4 @@
-syntax = "proto3";
+edition = "2023";
 
 package dev.unmango.file.v1alpha1;
 
@@ -39,14 +39,14 @@ message FileInfo {
 }
 
 service FileService {
-  rpc Read(ReadRequest) returns (ReadResponse);
-  rpc ReadAt(ReadAtRequest) returns (ReadAtResponse);
+  rpc Read(ReadRequest) returns (stream ReadResponse);
+  rpc ReadAt(ReadAtRequest) returns (stream ReadAtResponse);
   rpc Readdir(ReaddirRequest) returns (ReaddirResponse);
   rpc ReaddirNames(ReaddirNamesRequest) returns (ReaddirNamesResponse);
   rpc Stat(StatRequest) returns (StatResponse);
   rpc Truncate(TruncateRequest) returns (TruncateResponse);
-  rpc Write(WriteRequest) returns (WriteResponse);
-  rpc WriteAt(WriteAtRequest) returns (WriteAtResponse);
+  rpc Write(stream WriteRequest) returns (WriteResponse);
+  rpc WriteAt(stream WriteAtRequest) returns (WriteAtResponse);
 }
 
 message ReaddirRequest {
@@ -74,7 +74,6 @@ message ReadAtRequest {
 
 message ReadAtResponse {
   bytes data = 1;
-  int32 n = 2;
 }
 
 message ReadRequest {
@@ -83,7 +82,6 @@ message ReadRequest {
 
 message ReadResponse {
   bytes data = 1;
-  int32 n = 2;
 }
 
 message StatRequest {
@@ -106,9 +104,7 @@ message WriteRequest {
   bytes data = 2;
 }
 
-message WriteResponse {
-  int32 n = 1;
-}
+message WriteResponse {}
 
 message WriteAtRequest {
   File file = 1;
@@ -116,6 +112,4 @@ message WriteAtRequest {
   int64 offset = 3;
 }
 
-message WriteAtResponse {
-  int32 n = 1;
-}
+message WriteAtResponse {}
