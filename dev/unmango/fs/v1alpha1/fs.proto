@@ -5,6 +5,8 @@ package dev.unmango.fs.v1alpha1;
 import "dev/unmango/file/v1alpha1/file.proto";
 import "google/protobuf/timestamp.proto";
 
+option features.field_presence = IMPLICIT;
+
 service FsService {
   rpc Chmod(ChmodRequest) returns (ChmodResponse);
   rpc Chown(ChownRequest) returns (ChownResponse);
