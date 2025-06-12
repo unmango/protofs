@@ -16,10 +16,12 @@ service FsService {
   rpc MkdirAll(MkdirAllRequest) returns (MkdirAllResponse);
   rpc Open(OpenRequest) returns (OpenResponse);
   rpc OpenFile(OpenFileRequest) returns (OpenFileResponse);
+  rpc Read(ReadRequest) returns (stream ReadResponse);
   rpc Remove(RemoveRequest) returns (RemoveResponse);
   rpc RemoveAll(RemoveAllRequest) returns (RemoveAllResponse);
   rpc Rename(RenameRequest) returns (RenameResponse);
   rpc Stat(StatRequest) returns (StatResponse);
+  rpc Write(stream WriteRequest) returns (WriteResponse);
 }
 
 message ChmodRequest {
@@ -85,6 +87,14 @@ message OpenFileResponse {
   file.v1alpha1.File file = 1;
 }
 
+message ReadRequest {
+  string name = 1;
+}
+
+message ReadResponse {
+  bytes data = 1;
+}
+
 message RemoveRequest {
   string name = 1;
 }
@@ -111,3 +121,10 @@ message StatRequest {
 message StatResponse {
   file.v1alpha1.FileInfo file_info = 1;
 }
+
+message WriteRequest {
+  string name = 1;
+  bytes data = 2;
+}
+
+message WriteResponse {}
