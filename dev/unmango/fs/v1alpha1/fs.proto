@@ -79,7 +79,7 @@ message OpenResponse {
 
 message OpenFileRequest {
   string name = 1;
-  int32 flag = 2;
+  int64 flag = 2;
   file.v1alpha1.FileMode perm = 3;
 }
 
