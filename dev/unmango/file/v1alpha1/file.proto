@@ -29,6 +29,8 @@ enum FileMode {
 
 message File {
   string name = 1;
+  int64 flag = 2 [features.field_presence = EXPLICIT];
+  FileMode perm = 3 [features.field_presence = EXPLICIT];
 }
 
 message FileInfo {
